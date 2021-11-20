@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "D8UcGvp6BMuNfwfsrqKqK/FrwHy8zKhhnYPWVvcupCP/cfGxVt5ZxjUBcibo1kB852YiFtNjHQeqtDPbN1azyw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\agemb\\OneDrive\\Pulpit\\Projekty\\Piggy\\Piggy.Core\\Piggy.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\agemb\\.nuget\\packages\\mongodb.bson\\2.13.2\\mongodb.bson.2.13.2.nupkg.sha512",
+    "C:\\Users\\agemb\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

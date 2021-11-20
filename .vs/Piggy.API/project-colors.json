@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "606ab482-9fcc-4bf8-9f79-32114033b496": {
+      "ProjectGuid": "606ab482-9fcc-4bf8-9f79-32114033b496",
+      "DisplayName": "Piggy.API",
+      "ColorIndex": 0
+    },
+    "ececd291-4508-49e9-a29c-642a3502639b": {
+      "ProjectGuid": "ececd291-4508-49e9-a29c-642a3502639b",
+      "DisplayName": "Piggy.Core",
+      "ColorIndex": 1
+    },
+    "d4047a62-896b-4415-9d43-6e663bd0a115": {
+      "ProjectGuid": "d4047a62-896b-4415-9d43-6e663bd0a115",
+      "DisplayName": "Piggy.Infrastructure",
+      "ColorIndex": 2
+    }
+  },
+  "NextColorIndex": 3
+}
