@@ -1,0 +1,1 @@
+﻿public record FieldError(string Name, string Message);

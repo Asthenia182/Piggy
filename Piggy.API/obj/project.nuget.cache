@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "KFvDgGB+EdEZ5fXiXvczhpmRJjcBzD/TrjFjBrfX+Oqnr3fggjvT0RtnUyXW/4+zPbaoAUK6Tjvdgesec1GlgQ==",
+  "dgSpecHash": "gwgYgrmLoThvZosRxy7dWulBjHvbO8b+9IOEQCQSmWd4s6k1N+tyCka6yhQHcsCf0oWWqFiu684RyGcjFp0FMg==",
   "success": true,
   "projectFilePath": "C:\\Users\\agemb\\OneDrive\\Pulpit\\Projekty\\Piggy\\Piggy.API\\Piggy.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\agemb\\.nuget\\packages\\bcrypt.net-next\\4.0.2\\bcrypt.net-next.4.0.2.nupkg.sha512",
     "C:\\Users\\agemb\\.nuget\\packages\\dnsclient\\1.4.0\\dnsclient.1.4.0.nupkg.sha512",
+    "C:\\Users\\agemb\\.nuget\\packages\\fluentvalidation\\10.3.4\\fluentvalidation.10.3.4.nupkg.sha512",
     "C:\\Users\\agemb\\.nuget\\packages\\greendonut\\12.3.1\\greendonut.12.3.1.nupkg.sha512",
     "C:\\Users\\agemb\\.nuget\\packages\\hotchocolate\\12.2.1\\hotchocolate.12.2.1.nupkg.sha512",
     "C:\\Users\\agemb\\.nuget\\packages\\hotchocolate.abstractions\\12.3.1\\hotchocolate.abstractions.12.3.1.nupkg.sha512",

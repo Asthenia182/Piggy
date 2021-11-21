@@ -8,10 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
      .AddSingleton(sp =>
      {
-         return ConfigureMongoDB(sp);
+         return ConfigureMongoDb(sp, builder.Configuration);
      })
     .AddGraphQLServer()
-    .AddQueryType<Query>();
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    .AddMongoDbFiltering()
+    .AddMongoDbSorting()
+    .AddMongoDbProjections()
+    .AddMongoDbPagingProviders();
 
 var app = builder.Build();
 
@@ -26,10 +31,11 @@ app
 
 app.Run();
 
-IMongoDatabase ConfigureMongoDB(IServiceProvider sp)
+IMongoDatabase ConfigureMongoDb(IServiceProvider sp, ConfigurationManager configurationManager)
 {
-    const string connectionString = "mongodb://localhost:27017";
-    var mongoConnectionUrl = new MongoUrl(connectionString);
+    var mongodbConfig = configurationManager.GetSection(nameof(MongoDbConfiguration))
+        .Get<MongoDbConfiguration>();
+    var mongoConnectionUrl = new MongoUrl(mongodbConfig.ConnectionString);
     var mongoClientSettings = MongoClientSettings.FromUrl(mongoConnectionUrl);
     mongoClientSettings.ClusterConfigurator = cb =>
     {
@@ -40,6 +46,6 @@ IMongoDatabase ConfigureMongoDB(IServiceProvider sp)
         });
     };
     var client = new MongoClient(mongoClientSettings);
-    var database = client.GetDatabase("PiggyDB");
+    var database = client.GetDatabase(mongodbConfig.Database);
     return database;
 }

@@ -100,3 +100,5 @@ C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\obj\Debug\net6.0\Piggy.A
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\obj\Debug\net6.0\Piggy.API.genruntimeconfig.cache
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\HotChocolate.Data.dll
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\HotChocolate.Data.MongoDb.dll
+C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\FluentValidation.dll

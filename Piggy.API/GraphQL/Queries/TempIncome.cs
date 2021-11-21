@@ -5,7 +5,7 @@ public partial class Query
 {
     public IExecutable<TempIncome> TempIncomes([Service] IMongoDatabase db)
     {
-        return db.GetCollection<TempIncome>(nameof(TempIncome)).AsExecutable();
+        return db.GetCollection<TempIncome>("TempIncomes").AsExecutable();
     }
 }
 
