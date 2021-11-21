@@ -84,7 +84,6 @@ C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\runtime
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\runtimes\linux\native\libmongocrypt.so
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\runtimes\osx\native\libmongocrypt.dylib
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\runtimes\win\native\mongocrypt.dll
-C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\obj\Debug\net6.0\Piggy.API.csproj.AssemblyReference.cache
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\obj\Debug\net6.0\Piggy.API.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\obj\Debug\net6.0\Piggy.API.AssemblyInfoInputs.cache
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\obj\Debug\net6.0\Piggy.API.AssemblyInfo.cs
@@ -102,3 +101,4 @@ C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\HotChoc
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\HotChocolate.Data.MongoDb.dll
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\BCrypt.Net-Next.dll
 C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\bin\Debug\net6.0\FluentValidation.dll
+C:\Users\agemb\OneDrive\Pulpit\Projekty\Piggy\Piggy.API\obj\Debug\net6.0\Piggy.API.csproj.AssemblyReference.cache

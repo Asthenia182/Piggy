@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
+[BsonCollection("ConstOutcomes")]
 public class ConstOutcome
 {
     [BsonId]

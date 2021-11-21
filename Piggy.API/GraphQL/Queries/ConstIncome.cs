@@ -5,7 +5,7 @@ public partial class Query
 {
     public IExecutable<ConstIncome> ConstIncomes([Service] IMongoDatabase db)
     {
-        return db.GetCollection<ConstIncome>("ConstIncomes").AsExecutable();
+        return db.GetCollection<ConstIncome>(MongoDBUtils.GetCollectionName<ConstIncome>()).AsExecutable();
     }
 }
 

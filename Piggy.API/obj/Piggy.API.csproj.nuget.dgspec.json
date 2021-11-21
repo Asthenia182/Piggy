@@ -56,6 +56,10 @@
               "target": "Package",
               "version": "[12.3.1, )"
             },
+            "HotChocolate.Utilities.Introspection": {
+              "target": "Package",
+              "version": "[12.3.1, )"
+            },
             "MongoDB.Bson": {
               "target": "Package",
               "version": "[2.13.2, )"

@@ -6,7 +6,7 @@ public partial class Mutation
       [Service] IMongoDatabase db,
       UserInput input)
     {
-        var users = db.GetCollection<User>("Users");
+        var users = db.GetCollection<User>(MongoDBUtils.GetCollectionName<User>());
         var result = new UserInputValidator(users).Validate(input);
         if (!result.IsValid)
         {
@@ -22,7 +22,16 @@ public partial class Mutation
         else
             user.Username = input.UsernameOrEmail;
 
-        await users.InsertOneAsync(user);
+        try
+        {
+            await users.InsertOneAsync(user);
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
 
         return new UserPayload(input.UsernameOrEmail, null);
     }

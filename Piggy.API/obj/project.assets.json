@@ -1843,6 +1843,7 @@
       "FluentValidation >= 10.3.4",
       "HotChocolate.AspNetCore >= 12.2.1",
       "HotChocolate.Data.MongoDb >= 12.3.1",
+      "HotChocolate.Utilities.Introspection >= 12.3.1",
       "MongoDB.Bson >= 2.13.2",
       "MongoDB.Driver >= 2.13.2",
       "MongoDB.Driver.Core >= 2.13.2"
@@ -1900,6 +1901,10 @@
             "version": "[12.2.1, )"
           },
           "HotChocolate.Data.MongoDb": {
+            "target": "Package",
+            "version": "[12.3.1, )"
+          },
+          "HotChocolate.Utilities.Introspection": {
             "target": "Package",
             "version": "[12.3.1, )"
           },

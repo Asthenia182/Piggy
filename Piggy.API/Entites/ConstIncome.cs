@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
+[BsonCollection("ConstIncomes")]
 public class ConstIncome : IIncome
 {
     [BsonId]

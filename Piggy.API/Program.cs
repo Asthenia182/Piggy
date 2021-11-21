@@ -10,6 +10,17 @@ builder.Services
      {
          return ConfigureMongoDb(sp, builder.Configuration);
      })
+     .AddCors(options =>
+     {
+         options.AddDefaultPolicy(
+                           builder =>
+                           {
+                               builder
+                               .AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .AllowAnyOrigin();
+                           });
+     })
     .AddGraphQLServer()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
@@ -19,8 +30,7 @@ builder.Services
     .AddMongoDbPagingProviders();
 
 var app = builder.Build();
-
-app.UseHttpsRedirection();
+app.UseCors();
 
 app
     .UseRouting()
@@ -28,6 +38,8 @@ app
 {
     endpoints.MapGraphQL();
 });
+
+
 
 app.Run();
 

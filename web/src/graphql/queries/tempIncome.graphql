@@ -1,0 +1,6 @@
+query TempIncomes {
+  tempIncomes {
+    name
+    amount
+  }
+}
