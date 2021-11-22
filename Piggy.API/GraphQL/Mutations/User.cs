@@ -1,18 +1,19 @@
 ﻿using MongoDB.Driver;
+using Piggy.API.Utils;
 
 public partial class Mutation
 {
     public async Task<UserPayload> RegisterAsync(
-      [Service] IMongoDatabase db,
+      [Service] IMongoDatabase db, [Service] IHttpContextAccessor httpContextAccessor,
       UserInput input)
     {
         var users = db.GetCollection<User>(MongoDBUtils.GetCollectionName<User>());
         var user = await GetUserAsync(input.UsernameOrEmail, db);
         if (user != null)
         {
-            return new UserPayload(input.UsernameOrEmail, new FieldError[]
+            return new UserPayload(UserUtils.GetUsernameOrEmail(user), new FieldError[]
                    {
-                    new FieldError(nameof(input.UsernameOrEmail), Consts.USER_EXISTS)
+                    new FieldError(nameof(input.UsernameOrEmail), ValidationErrors.USER_EXISTS)
                    });
         }
 
@@ -27,26 +28,20 @@ public partial class Mutation
         }
 
         user = new User() { PasswordHash = BCrypt.Net.BCrypt.HashPassword(input.Password) };
-        if (UserInputValidator.IsEmail(input.UsernameOrEmail))
+        if (UserUtils.IsEmail(input.UsernameOrEmail))
             user.Email = input.UsernameOrEmail;
         else
             user.Username = input.UsernameOrEmail;
 
-        try
-        {
-            await users.InsertOneAsync(user);
-        }
-        catch (Exception ex)
-        {
+        await users.InsertOneAsync(user);
 
-            throw;
-        }
+        httpContextAccessor.HttpContext?.Session.SetString(Consts.COOKIE_NAME, user.Id);
 
         return new UserPayload(input.UsernameOrEmail, null);
     }
 
     public async Task<UserPayload> LoginAsync(
-      [Service] IMongoDatabase db,
+      [Service] IMongoDatabase db, [Service] IHttpContextAccessor httpContextAccessor,
       UserInput input)
     {
         User? user = await GetUserAsync(input.UsernameOrEmail, db);
@@ -54,7 +49,7 @@ public partial class Mutation
         {
             return new UserPayload(input.UsernameOrEmail, new FieldError[]
                 {
-                    new FieldError(nameof(input.UsernameOrEmail), Consts.INVALID_USERNAME)
+                    new FieldError(nameof(input.UsernameOrEmail), ValidationErrors.INVALID_USERNAME)
                 });
         }
 
@@ -62,9 +57,11 @@ public partial class Mutation
         {
             return new UserPayload(input.UsernameOrEmail, new FieldError[]
                 {
-                    new FieldError(nameof(input.Password), Consts.INVALID_PASSWORD)
+                    new FieldError(nameof(input.Password), ValidationErrors.INVALID_PASSWORD)
                 });
         }
+
+        httpContextAccessor.HttpContext?.Session.SetString(Consts.COOKIE_NAME, user.Id);
 
         return new UserPayload(input.UsernameOrEmail, null);
     }
@@ -72,7 +69,7 @@ public partial class Mutation
     private async Task<User> GetUserAsync(string usernameOrEmail, IMongoDatabase db)
     {
         var users = db.GetCollection<User>(MongoDBUtils.GetCollectionName<User>());
-        string? email = UserInputValidator.IsEmail(usernameOrEmail) ? usernameOrEmail : null;
+        string? email = UserUtils.IsEmail(usernameOrEmail) ? usernameOrEmail : null;
         User? user = email != null
             ? await users.Find(x => x.Email == usernameOrEmail).FirstOrDefaultAsync()
             : await users.Find(x => x.Username == usernameOrEmail).FirstOrDefaultAsync();

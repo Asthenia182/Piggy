@@ -1,6 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
      .AddSingleton(sp =>
      {
-         return ConfigureMongoDb(sp, builder.Configuration);
+         return Configure(sp, builder.Configuration);
      })
      .AddCors(options =>
      {
@@ -21,6 +22,14 @@ builder.Services
                                .AllowAnyOrigin();
                            });
      })
+    .AddStackExchangeRedisCache(redisCacheConfig =>
+    {
+        var redisConfig = builder.Configuration.GetSection(nameof(RedisConfiguration))
+        .Get<MongoDbConfiguration>();
+        redisCacheConfig.ConfigurationOptions =
+            ConfigurationOptions.Parse(redisConfig.ConnectionString);
+    })
+    .AddHttpContextAccessor()
     .AddGraphQLServer()
     .AddQueryType<Query>()
     .AddMutationType<Mutation>()
@@ -29,21 +38,27 @@ builder.Services
     .AddMongoDbProjections()
     .AddMongoDbPagingProviders();
 
-var app = builder.Build();
-app.UseCors();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "pid";
+    options.IdleTimeout = TimeSpan.FromMinutes(60 * 24 * 14);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
+var app = builder.Build();
 app
-    .UseRouting()
-    .UseEndpoints(endpoints =>
+   .UseCors()
+   .UseRouting()
+   .UseSession()
+   .UseEndpoints(endpoints =>
 {
     endpoints.MapGraphQL();
 });
 
-
-
 app.Run();
 
-IMongoDatabase ConfigureMongoDb(IServiceProvider sp, ConfigurationManager configurationManager)
+IMongoDatabase Configure(IServiceProvider sp, ConfigurationManager configurationManager)
 {
     var mongodbConfig = configurationManager.GetSection(nameof(MongoDbConfiguration))
         .Get<MongoDbConfiguration>();
