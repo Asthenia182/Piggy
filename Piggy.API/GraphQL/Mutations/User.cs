@@ -7,16 +7,26 @@ public partial class Mutation
       UserInput input)
     {
         var users = db.GetCollection<User>(MongoDBUtils.GetCollectionName<User>());
-        var result = new UserInputValidator(users).Validate(input);
-        if (!result.IsValid)
+        var user = await GetUserAsync(input.UsernameOrEmail, db);
+        if (user != null)
+        {
+            return new UserPayload(input.UsernameOrEmail, new FieldError[]
+                   {
+                    new FieldError(nameof(input.UsernameOrEmail), Consts.USER_EXISTS)
+                   });
+        }
+
+        var validationResult = new UserInputValidator().Validate(input);
+        if (!validationResult.IsValid)
         {
             var fieldErrors = new List<FieldError>();
-            result.Errors.ForEach(x => fieldErrors.Add(new FieldError(x.PropertyName, x.ErrorMessage)));
-
+            validationResult.Errors.ForEach(x => fieldErrors.Add(
+                new FieldError(x.PropertyName, x.ErrorMessage))
+            );
             return new UserPayload(input.UsernameOrEmail, fieldErrors.ToArray());
         }
 
-        var user = new User() { PasswordHash = BCrypt.Net.BCrypt.HashPassword(input.Password) };
+        user = new User() { PasswordHash = BCrypt.Net.BCrypt.HashPassword(input.Password) };
         if (UserInputValidator.IsEmail(input.UsernameOrEmail))
             user.Email = input.UsernameOrEmail;
         else
@@ -32,7 +42,6 @@ public partial class Mutation
             throw;
         }
 
-
         return new UserPayload(input.UsernameOrEmail, null);
     }
 
@@ -40,11 +49,7 @@ public partial class Mutation
       [Service] IMongoDatabase db,
       UserInput input)
     {
-        string? email = UserInputValidator.IsEmail(
-            input.UsernameOrEmail) ? input.UsernameOrEmail : null;
-        User? user = email != null
-            ? await db.GetCollection<User>("Users").Find(x => x.Email == input.UsernameOrEmail).FirstOrDefaultAsync()
-            : await db.GetCollection<User>("Users").Find(x => x.Username == input.UsernameOrEmail).FirstOrDefaultAsync();
+        User? user = await GetUserAsync(input.UsernameOrEmail, db);
         if (user == null)
         {
             return new UserPayload(input.UsernameOrEmail, new FieldError[]
@@ -62,5 +67,16 @@ public partial class Mutation
         }
 
         return new UserPayload(input.UsernameOrEmail, null);
+    }
+
+    private async Task<User> GetUserAsync(string usernameOrEmail, IMongoDatabase db)
+    {
+        var users = db.GetCollection<User>(MongoDBUtils.GetCollectionName<User>());
+        string? email = UserInputValidator.IsEmail(usernameOrEmail) ? usernameOrEmail : null;
+        User? user = email != null
+            ? await users.Find(x => x.Email == usernameOrEmail).FirstOrDefaultAsync()
+            : await users.Find(x => x.Username == usernameOrEmail).FirstOrDefaultAsync();
+
+        return user;
     }
 }
